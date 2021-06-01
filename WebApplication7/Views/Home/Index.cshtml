@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div class="row">
+
+    <div class="col-md-12">
+        @if (Session["Role"] != null)
+        {
+            if (Session["Role"].ToString() == "1")
+            {
+                <p>Admin</p>
+            }
+            if (Session["Role"].ToString() == "2")
+            {
+                <p>Lecturer</p>
+            }
+            else if (Session["Role"].ToString() == "3")
+            {
+                <p>Student</p>
+            }
+        }
+            else
+            {
+                <div class="text-center py-3">
+                    <div class="jumbotron">
+                        <h1>Studentai ir jų moduliai.</h1>
+                    </div>
+                </div>
+            }
+    </div>
+</div>

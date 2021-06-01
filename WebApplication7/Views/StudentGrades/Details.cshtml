@@ -1,0 +1,58 @@
+﻿@model WebApplication7.Models.StudentGrade
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StudentGrade</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LecturerID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LecturerID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Grade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Grade)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GradeTitle.GradeTitle1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GradeTitle.GradeTitle1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Module.ModuleCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Module.ModuleCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.GradeID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

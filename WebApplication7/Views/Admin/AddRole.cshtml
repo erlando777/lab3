@@ -1,0 +1,58 @@
+﻿@model WebApplication7.Models.Role
+@{
+    ViewBag.Title = "AddRole";
+}
+
+<h2 class="text-center py-2">Rolės pridėjimas</h2>
+<hr />
+
+@using (Html.BeginForm())
+{
+    if (ViewBag.Error == null)
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="container w-50 justify-content-center mr-auto">
+            <div class="container col-6">
+                <h4 class="text-center py-2">Rolė</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group" style="padding-left:40px">
+                    @Html.LabelFor(model => model.UserID, "Vartotojas", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("UserID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group" style="padding-left:40px">
+                    @Html.LabelFor(model => model.Role1, "Pasirinkite rolę", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("Role1", new List<SelectListItem>{
+                            new SelectListItem{Text="Administratorius", Value="1"},
+                            new SelectListItem{Text="Dėstytojas", Value="2"},
+                            new SelectListItem{Text="Studentas", Value="3"},
+                        }, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Role1, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group py-2" style="padding-left:40px">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Priskirti rolę" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+            </div>
+            }
+            else
+            {
+            <div> @ViewBag.Error</div>
+            }
+            <hr />
+            }
+
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }

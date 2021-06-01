@@ -1,0 +1,64 @@
+﻿@model WebApplication7.Models.StudentGrade
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>StudentGrade</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LecturerID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LecturerID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Grade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Grade)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GradeTitle.GradeTitle1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GradeTitle.GradeTitle1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Module.ModuleCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Module.ModuleCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

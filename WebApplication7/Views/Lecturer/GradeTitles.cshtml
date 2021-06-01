@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WebApplication7.Models.GradeTitle>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center py-2" >Vertinimo kriterijai</h2>
+<hr />
+<table class="table">
+    <tr>
+        <th>
+            Kriterijus
+        </th>
+        <th>
+            Modulio kodas
+        </th>
+        <th>
+            Modulis
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.GradeTitle1)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Module.ModuleCode)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Module.ModuleTitle)
+    </td>
+    <td>
+        @Html.ActionLink("Pašalinti kriterijų", "DeleteGradeTitle", new { id = item.GradeTitleID })
+    </td>
+</tr>
+}
+
+</table>

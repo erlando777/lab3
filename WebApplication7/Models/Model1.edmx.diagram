@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3c638965a6204bc3ad7f82432a2ac2a1" Name="Diagram1">
+        <EntityTypeShape EntityType="albModel.Role" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="albModel.Module" Width="1.5" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="albModel.StudentModule" Width="1.5" PointX="5.625" PointY="2.5" />
+        <AssociationConnector Association="albModel.FK_StudentModules_Module" />
+        <EntityTypeShape EntityType="albModel.Lecture" Width="1.5" PointX="5.625" PointY="6" />
+        <AssociationConnector Association="albModel.FK_Lectures_Module" />
+        <EntityTypeShape EntityType="albModel.User" Width="1.5" PointX="0.75" PointY="2.125" />
+        <AssociationConnector Association="albModel.FK_Module_User" />
+        <AssociationConnector Association="albModel.FK_Roles_User" />
+        <AssociationConnector Association="albModel.FK_StudentModules_User" />
+        <EntityTypeShape EntityType="albModel.GradeTitle" Width="1.5" PointX="5.625" PointY="9.125" />
+        <EntityTypeShape EntityType="albModel.StudentGrade" Width="1.5" PointX="7.875" PointY="5.25" />
+        <AssociationConnector Association="albModel.FK_GradeTitles_Module" />
+        <AssociationConnector Association="albModel.FK_StudentGrades_GradeTitles" />
+        <AssociationConnector Association="albModel.FK_StudentGrades_Module" />
+        <AssociationConnector Association="albModel.FK_StudentGrades_User" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

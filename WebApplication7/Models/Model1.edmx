@@ -1,0 +1,570 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="albModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="GradeTitles">
+          <Key>
+            <PropertyRef Name="GradeTitleID" />
+          </Key>
+          <Property Name="GradeTitleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModuleID" Type="int" />
+          <Property Name="GradeTitle" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Lectures">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModuleID" Type="int" Nullable="false" />
+          <Property Name="LectureTitle" Type="nvarchar(max)" />
+          <Property Name="LectureActivity" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="ModuleID" />
+          </Key>
+          <Property Name="ModuleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModuleCode" Type="nvarchar" MaxLength="15" />
+          <Property Name="ModuleTitle" Type="nvarchar" MaxLength="200" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleConnectionID" />
+          </Key>
+          <Property Name="RoleConnectionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="Role" Type="int" />
+        </EntityType>
+        <EntityType Name="StudentGrades">
+          <Key>
+            <PropertyRef Name="GradeID" />
+          </Key>
+          <Property Name="GradeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModuleID" Type="int" />
+          <Property Name="LecturerID" Type="int" />
+          <Property Name="StudentID" Type="int" />
+          <Property Name="GradeTitleID" Type="int" />
+          <Property Name="Grade" Type="float" />
+        </EntityType>
+        <EntityType Name="StudentModules">
+          <Key>
+            <PropertyRef Name="ConnectionID" />
+          </Key>
+          <Property Name="ConnectionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="ModuleID" Type="int" Nullable="false" />
+          <Property Name="LecturerID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="100" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" />
+          <Property Name="Password" Type="nvarchar" MaxLength="250" />
+          <Property Name="Role" Type="int" />
+        </EntityType>
+        <Association Name="FK_GradeTitles_Module">
+          <End Role="Module" Type="Self.Module" Multiplicity="0..1" />
+          <End Role="GradeTitles" Type="Self.GradeTitles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ModuleID" />
+            </Principal>
+            <Dependent Role="GradeTitles">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lectures_Module">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="Lectures" Type="Self.Lectures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ModuleID" />
+            </Principal>
+            <Dependent Role="Lectures">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Module" Type="Self.Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Module">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roles_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Roles" Type="Self.Roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentGrades_GradeTitles">
+          <End Role="GradeTitles" Type="Self.GradeTitles" Multiplicity="0..1" />
+          <End Role="StudentGrades" Type="Self.StudentGrades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GradeTitles">
+              <PropertyRef Name="GradeTitleID" />
+            </Principal>
+            <Dependent Role="StudentGrades">
+              <PropertyRef Name="GradeTitleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentGrades_Module">
+          <End Role="Module" Type="Self.Module" Multiplicity="0..1" />
+          <End Role="StudentGrades" Type="Self.StudentGrades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ModuleID" />
+            </Principal>
+            <Dependent Role="StudentGrades">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentGrades_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="StudentGrades" Type="Self.StudentGrades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="StudentGrades">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentModules_Module">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="StudentModules" Type="Self.StudentModules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ModuleID" />
+            </Principal>
+            <Dependent Role="StudentModules">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentModules_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="StudentModules" Type="Self.StudentModules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="StudentModules">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="albModelStoreContainer">
+          <EntitySet Name="GradeTitles" EntityType="Self.GradeTitles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lectures" EntityType="Self.Lectures" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentGrades" EntityType="Self.StudentGrades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentModules" EntityType="Self.StudentModules" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_GradeTitles_Module" Association="Self.FK_GradeTitles_Module">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="GradeTitles" EntitySet="GradeTitles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lectures_Module" Association="Self.FK_Lectures_Module">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="Lectures" EntitySet="Lectures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_User" Association="Self.FK_Module_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Module" EntitySet="Module" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_User" Association="Self.FK_Roles_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentGrades_GradeTitles" Association="Self.FK_StudentGrades_GradeTitles">
+            <End Role="GradeTitles" EntitySet="GradeTitles" />
+            <End Role="StudentGrades" EntitySet="StudentGrades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentGrades_Module" Association="Self.FK_StudentGrades_Module">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="StudentGrades" EntitySet="StudentGrades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentGrades_User" Association="Self.FK_StudentGrades_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="StudentGrades" EntitySet="StudentGrades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentModules_Module" Association="Self.FK_StudentModules_Module">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="StudentModules" EntitySet="StudentModules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentModules_User" Association="Self.FK_StudentModules_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="StudentModules" EntitySet="StudentModules" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="albModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleConnectionID" />
+          </Key>
+          <Property Name="RoleConnectionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="Role1" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="albModel.FK_Roles_User" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Modules" EntityType="albModel.Module" />
+          <EntitySet Name="StudentModules" EntityType="albModel.StudentModule" />
+          <AssociationSet Name="FK_StudentModules_Module" Association="albModel.FK_StudentModules_Module">
+            <End Role="Module" EntitySet="Modules" />
+            <End Role="StudentModule" EntitySet="StudentModules" />
+          </AssociationSet>
+          <EntitySet Name="Lectures" EntityType="albModel.Lecture" />
+          <AssociationSet Name="FK_Lectures_Module" Association="albModel.FK_Lectures_Module">
+            <End Role="Module" EntitySet="Modules" />
+            <End Role="Lecture" EntitySet="Lectures" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="albModel.User" />
+          <AssociationSet Name="FK_Module_User" Association="albModel.FK_Module_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Module" EntitySet="Modules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_User" Association="albModel.FK_Roles_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentModules_User" Association="albModel.FK_StudentModules_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="StudentModule" EntitySet="StudentModules" />
+          </AssociationSet>
+          <EntitySet Name="GradeTitles" EntityType="albModel.GradeTitle" />
+          <EntitySet Name="StudentGrades" EntityType="albModel.StudentGrade" />
+          <AssociationSet Name="FK_GradeTitles_Module" Association="albModel.FK_GradeTitles_Module">
+            <End Role="Module" EntitySet="Modules" />
+            <End Role="GradeTitle" EntitySet="GradeTitles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentGrades_GradeTitles" Association="albModel.FK_StudentGrades_GradeTitles">
+            <End Role="GradeTitle" EntitySet="GradeTitles" />
+            <End Role="StudentGrade" EntitySet="StudentGrades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentGrades_Module" Association="albModel.FK_StudentGrades_Module">
+            <End Role="Module" EntitySet="Modules" />
+            <End Role="StudentGrade" EntitySet="StudentGrades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentGrades_User" Association="albModel.FK_StudentGrades_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="StudentGrade" EntitySet="StudentGrades" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="ModuleID" />
+          </Key>
+          <Property Name="ModuleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModuleCode" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="ModuleTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StudentModules" Relationship="albModel.FK_StudentModules_Module" FromRole="Module" ToRole="StudentModule" />
+          <NavigationProperty Name="Lectures" Relationship="albModel.FK_Lectures_Module" FromRole="Module" ToRole="Lecture" />
+          <NavigationProperty Name="User" Relationship="albModel.FK_Module_User" FromRole="Module" ToRole="User" />
+          <NavigationProperty Name="GradeTitles" Relationship="albModel.FK_GradeTitles_Module" FromRole="Module" ToRole="GradeTitle" />
+          <NavigationProperty Name="StudentGrades" Relationship="albModel.FK_StudentGrades_Module" FromRole="Module" ToRole="StudentGrade" />
+        </EntityType>
+        <EntityType Name="StudentModule">
+          <Key>
+            <PropertyRef Name="ConnectionID" />
+          </Key>
+          <Property Name="ConnectionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <Property Name="ModuleID" Type="Int32" Nullable="false" />
+          <Property Name="LecturerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Module" Relationship="albModel.FK_StudentModules_Module" FromRole="StudentModule" ToRole="Module" />
+          <NavigationProperty Name="User" Relationship="albModel.FK_StudentModules_User" FromRole="StudentModule" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_StudentModules_Module">
+          <End Type="albModel.Module" Role="Module" Multiplicity="1" />
+          <End Type="albModel.StudentModule" Role="StudentModule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ModuleID" />
+            </Principal>
+            <Dependent Role="StudentModule">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Lecture">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModuleID" Type="Int32" Nullable="false" />
+          <Property Name="LectureTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LectureActivity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Module" Relationship="albModel.FK_Lectures_Module" FromRole="Lecture" ToRole="Module" />
+        </EntityType>
+        <Association Name="FK_Lectures_Module">
+          <End Type="albModel.Module" Role="Module" Multiplicity="1" />
+          <End Type="albModel.Lecture" Role="Lecture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ModuleID" />
+            </Principal>
+            <Dependent Role="Lecture">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Role" Type="Int32" />
+          <NavigationProperty Name="Modules" Relationship="albModel.FK_Module_User" FromRole="User" ToRole="Module" />
+          <NavigationProperty Name="Roles" Relationship="albModel.FK_Roles_User" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="StudentModules" Relationship="albModel.FK_StudentModules_User" FromRole="User" ToRole="StudentModule" />
+          <NavigationProperty Name="StudentGrades" Relationship="albModel.FK_StudentGrades_User" FromRole="User" ToRole="StudentGrade" />
+        </EntityType>
+        <Association Name="FK_Module_User">
+          <End Type="albModel.User" Role="User" Multiplicity="1" />
+          <End Type="albModel.Module" Role="Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Module">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roles_User">
+          <End Type="albModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="albModel.Role" Role="Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Role">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentModules_User">
+          <End Type="albModel.User" Role="User" Multiplicity="1" />
+          <End Type="albModel.StudentModule" Role="StudentModule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="StudentModule">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="GradeTitle">
+          <Key>
+            <PropertyRef Name="GradeTitleID" />
+          </Key>
+          <Property Name="GradeTitleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModuleID" Type="Int32" />
+          <Property Name="GradeTitle1" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Module" Relationship="albModel.FK_GradeTitles_Module" FromRole="GradeTitle" ToRole="Module" />
+          <NavigationProperty Name="StudentGrades" Relationship="albModel.FK_StudentGrades_GradeTitles" FromRole="GradeTitle" ToRole="StudentGrade" />
+        </EntityType>
+        <EntityType Name="StudentGrade">
+          <Key>
+            <PropertyRef Name="GradeID" />
+          </Key>
+          <Property Name="GradeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModuleID" Type="Int32" />
+          <Property Name="LecturerID" Type="Int32" />
+          <Property Name="StudentID" Type="Int32" />
+          <Property Name="GradeTitleID" Type="Int32" />
+          <Property Name="Grade" Type="Double" />
+          <NavigationProperty Name="GradeTitle" Relationship="albModel.FK_StudentGrades_GradeTitles" FromRole="StudentGrade" ToRole="GradeTitle" />
+          <NavigationProperty Name="Module" Relationship="albModel.FK_StudentGrades_Module" FromRole="StudentGrade" ToRole="Module" />
+          <NavigationProperty Name="User" Relationship="albModel.FK_StudentGrades_User" FromRole="StudentGrade" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_GradeTitles_Module">
+          <End Type="albModel.Module" Role="Module" Multiplicity="0..1" />
+          <End Type="albModel.GradeTitle" Role="GradeTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ModuleID" />
+            </Principal>
+            <Dependent Role="GradeTitle">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentGrades_GradeTitles">
+          <End Type="albModel.GradeTitle" Role="GradeTitle" Multiplicity="0..1" />
+          <End Type="albModel.StudentGrade" Role="StudentGrade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GradeTitle">
+              <PropertyRef Name="GradeTitleID" />
+            </Principal>
+            <Dependent Role="StudentGrade">
+              <PropertyRef Name="GradeTitleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentGrades_Module">
+          <End Type="albModel.Module" Role="Module" Multiplicity="0..1" />
+          <End Type="albModel.StudentGrade" Role="StudentGrade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ModuleID" />
+            </Principal>
+            <Dependent Role="StudentGrade">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentGrades_User">
+          <End Type="albModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="albModel.StudentGrade" Role="StudentGrade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="StudentGrade">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="albModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="albModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="RoleConnectionID" ColumnName="RoleConnectionID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Role1" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modules">
+            <EntityTypeMapping TypeName="albModel.Module">
+              <MappingFragment StoreEntitySet="Module">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ModuleTitle" ColumnName="ModuleTitle" />
+                <ScalarProperty Name="ModuleCode" ColumnName="ModuleCode" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentModules">
+            <EntityTypeMapping TypeName="albModel.StudentModule">
+              <MappingFragment StoreEntitySet="StudentModules">
+                <ScalarProperty Name="LecturerID" ColumnName="LecturerID" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="ConnectionID" ColumnName="ConnectionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lectures">
+            <EntityTypeMapping TypeName="albModel.Lecture">
+              <MappingFragment StoreEntitySet="Lectures">
+                <ScalarProperty Name="LectureActivity" ColumnName="LectureActivity" />
+                <ScalarProperty Name="LectureTitle" ColumnName="LectureTitle" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="albModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GradeTitles">
+            <EntityTypeMapping TypeName="albModel.GradeTitle">
+              <MappingFragment StoreEntitySet="GradeTitles">
+                <ScalarProperty Name="GradeTitle1" ColumnName="GradeTitle" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="GradeTitleID" ColumnName="GradeTitleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentGrades">
+            <EntityTypeMapping TypeName="albModel.StudentGrade">
+              <MappingFragment StoreEntitySet="StudentGrades">
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="GradeTitleID" ColumnName="GradeTitleID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="LecturerID" ColumnName="LecturerID" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="GradeID" ColumnName="GradeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

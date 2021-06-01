@@ -1,0 +1,36 @@
+﻿@model IEnumerable<WebApplication7.Models.Module>
+
+@{
+    ViewBag.Title = "Dėstytojo moduliai";
+}
+
+<h2 class="text-center py-2">Dėstytojo moduliai</h2>
+<hr />
+<div class="container justify-content-center">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-6 py-2">
+                <div class="card justify-content-center" style="width:630px;height:200px">
+                    <div class="card-body">
+                        <div class="card-title text-center">
+                            <h2>@Html.DisplayFor(modelItem => item.ModuleTitle)</h2>
+                        </div>
+
+                    </div> <div class="container text-center rounded" style="width:480px;background-color:#40a697">
+                        @Html.ActionLink("Redaguoti modulį", "EditModule", new { id = item.ModuleID }, new { Style = "color:white" }) |
+                        @Html.ActionLink("Modulio studentai", "Students", new { id = item.ModuleID }, new { Style = "color:white" }) |
+                        @Html.ActionLink("Ištrinti modulį", "DeleteModule", new { id = item.ModuleID }, new { Style = "color:white" }) |
+                        @Html.ActionLink("Pridėti vertinimo kriterijų", "AddGradeTitle", new { id = item.ModuleID }, new { Style = "color:white" }) |
+                        @Html.ActionLink("Vertinimo kriterijai", "GradeTitles", new { id = item.ModuleID }, new { Style = "color:white" })
+                    </div>
+                    <div class="container justify-content-center py-2">
+                        <div class="container text-center rounded" style="width:480px;background-color:#40a697">
+                            <a href="" class="text-white"> @Html.ActionLink("Peržiūrėti", "ModuleLectures", new { id = item.ModuleID }, new { Style = "color:white" })</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,57 @@
+﻿@model WebApplication7.Models.StudentGrade
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2 class="text-center py-2">Edit</h2>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container w-50 justify-content-center mr-auto">
+        <div class="container col-6">
+            <h4 class="text-center py-2">StudentGrade</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.GradeID)
+            <div class="form-group" style="padding-left:40px">
+                @Html.LabelFor(model => model.LecturerID, "Dėstytojo ID", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LecturerID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LecturerID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="padding-left:40px">
+                @Html.LabelFor(model => model.StudentID, "Studentas", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("StudentID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.StudentID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="padding-left:40px">
+                @Html.LabelFor(model => model.GradeTitleID, "Vertinimo kriterijus", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.DropDownList("GradeTitleID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.GradeTitleID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="padding-left:40px">
+                @Html.LabelFor(model => model.Grade, "Įvertinimas", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Grade, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Grade, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group py-2" style="padding-left:40px">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Išsaugoti" class="btn btn-info" />
+                </div>
+            </div>
+        </div>
+        </div>
+        }

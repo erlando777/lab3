@@ -1,0 +1,25 @@
+﻿@model IEnumerable<WebApplication7.Models.Lecture>
+@{
+    ViewBag.Title = "ModuleLectures";
+}
+
+<h2 class="pt-5 pb-2">@ViewBag.Message</h2>
+<div class="px-1">
+    <a href="javascript:history.back()">Grįžti atgal</a>
+</div>
+<hr />
+@foreach (var item in Model)
+{
+    <div class="container py-2">
+        <div class="h5 px-2 font-weight-bold" style="height: 30px;background-color: #E6E6E6; border-left:3px solid #40a697">
+            @Html.DisplayFor(model => item.LectureTitle)
+        </div>
+    </div>
+    <div class="container" style="height:130px">
+        <div class="p-2">
+            <p>@Html.DisplayFor(model => item.LectureActivity)</p>
+        </div>
+    </div>
+    <hr />
+}
+<hr />
